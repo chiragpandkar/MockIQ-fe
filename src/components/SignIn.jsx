@@ -5,7 +5,7 @@ import React from 'react'
 const SignIn = ({formData, onChange, onSubmit, onSignUp}) => { 
     return (
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10%'}}>
             <Paper sx={{minWidth:'300px', minHeight:'300px', width: '30vw', height: '55vh', padding: '1%', display: 'flex', flexDirection: 'column', gap: '5%', alignItems: 'center', boxShadow: '10'}}>
                 <Typography variant='h5' sx={{ fontWeight: 'bold', pt: '1%' }}> Sign in to MockIQ </Typography>
                 <Typography sx={{color: 'GrayText'}}> Welcome, please sign in to continue </Typography>

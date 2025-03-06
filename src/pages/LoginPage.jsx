@@ -42,7 +42,7 @@ const LoginPage = () => {
     }
 
   return (
-    <SignIn formData={formData} onChange={handleChange} onSubmit={handleSubmit} onSignUp={handleSignUp}/>
+    <SignIn formData={formData} onChange={handleChange} onSubmit={handleSubmit} onSignUp={handleSignUp} sx={{}}/>
   );
 };
 

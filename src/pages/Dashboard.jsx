@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { validateToken } from '../apis/services';
 import { Button } from '@mui/material';
+import ResponsiveAppBar from '../components/Navbar';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -33,9 +34,9 @@ const Dashboard = () => {
 
     return (
     <>
-        <div>Dashboard</div>
-        <Button onClick={handleLogout}>Logout</Button>
+        <ResponsiveAppBar onLogout={handleLogout}/>
     </>
+    
     )
 }
 
