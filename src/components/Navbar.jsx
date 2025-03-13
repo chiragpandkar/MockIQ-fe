@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 const settings = ['Profile', 'Logout'];
 
-function ResponsiveAppBar({onLogout}) {
+function ResponsiveAppBar({onLogout, onProfile}) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 
@@ -24,6 +24,11 @@ function ResponsiveAppBar({onLogout}) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleMenuOptionsClick = (setting) => {
+    if(setting === 'Logout')  onLogout;
+    else if(setting === 'Profile') onProfile;
+  }
 
   return (
     <AppBar position="static">
@@ -73,7 +78,7 @@ function ResponsiveAppBar({onLogout}) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }} onClick={setting === 'Logout' ? onLogout : undefined}>{setting}</Typography>
+                  <Typography sx={{ textAlign: 'center' }} onClick={handleMenuOptionsClick}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes} from 'react-router-dom';
-import LoginPage from '../pages/loginPage';
+import LoginPage from '../pages/LoginPage';
 import Dashboard from '../pages/Dashboard';
 import SignUpPage from '../pages/SignUpPage';
 const defaultNavigate = <Navigate to="/" replace />;

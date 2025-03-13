@@ -63,3 +63,22 @@ export const validateToken = async (token) => {
         throw error.response?.data  || {error: "Network error"};
     }
 };
+
+export const getCurrentUser = async (token) => {
+    try{
+        const config = {
+            method: 'GET',
+            url: 'users/me',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        } 
+
+        const response = await axios(config);
+        return response;
+    } catch (error) {
+        console.log("Get current user error: ", error);
+        throw error.response?.data || {error: "Network error"};
+    }
+};

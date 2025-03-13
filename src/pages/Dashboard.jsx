@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { validateToken } from '../apis/services';
-import { Button } from '@mui/material';
 import ResponsiveAppBar from '../components/Navbar';
 
 const Dashboard = () => {
@@ -32,9 +31,13 @@ const Dashboard = () => {
         navigate("/sign-in");
     }
 
+    const handleProfile = () => {
+        
+    }
+
     return (
     <>
-        <ResponsiveAppBar onLogout={handleLogout}/>
+        <ResponsiveAppBar onLogout={handleLogout} onProfile={handleProfile}/>
     </>
     
     )
