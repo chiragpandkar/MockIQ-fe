@@ -25,10 +25,17 @@ function ResponsiveAppBar({onLogout, onProfile}) {
     setAnchorElUser(null);
   };
 
-  const handleMenuOptionsClick = (setting) => {
-    if(setting === 'Logout')  onLogout;
-    else if(setting === 'Profile') onProfile;
-  }
+  const handleMenuOptionsClick = (setting, event) => {
+    if (setting === "Logout") {
+        onLogout();
+    } else if (setting === "Profile") {
+        onProfile(event);  
+    }
+
+    handleCloseUserMenu();  
+  };
+
+
 
   return (
     <AppBar position="static">
@@ -77,8 +84,8 @@ function ResponsiveAppBar({onLogout, onProfile}) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }} onClick={handleMenuOptionsClick}>{setting}</Typography>
+                <MenuItem key={setting} onClick={(event) => handleMenuOptionsClick(setting, event)}>
+                  <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
