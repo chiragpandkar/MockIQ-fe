@@ -4,6 +4,8 @@ import { validateToken } from "../apis/services";
 import ResponsiveAppBar from "../components/Navbar";
 import ProfilePopover from "../components/ProfilePopover";
 import useCurrentUser from "../hooks/useCurrentUser";
+import ResumeUpload from "../components/ResumeUpload";
+import { Box } from "@mui/material";
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -47,13 +49,17 @@ const Dashboard = () => {
         <>
             <ResponsiveAppBar onLogout={handleLogout} onProfile={handleProfileClick} />
 
+            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <ResumeUpload />
+            </Box>
+
             {/* Profile Popover */}
-            <ProfilePopover
+            {/* <ProfilePopover
                 anchorEl={anchorEl}
                 handleClose={handleProfileClose}
                 username={username}
                 email={email}
-            />
+            /> */}
 
 
         </>
