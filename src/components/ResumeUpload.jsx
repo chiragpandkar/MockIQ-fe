@@ -1,46 +1,29 @@
-import React, { useState } from "react";
-import { Box, Button, Typography, CircularProgress } from "@mui/material";
+// ResumeUpload.js
+import React, { useMemo } from "react";
+import {
+    Box,
+    Button,
+    Typography,
+    CircularProgress,
+    Paper,
+    IconButton,
+} from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import axios from "axios";
+import CloseIcon from "@mui/icons-material/Close";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
-const ResumeUpload = () => {
-    const [file, setFile] = useState(null);
-    const [uploadStatus, setUploadStatus] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    // Handle file selection
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
-    };
-
-    // Handle file upload
-    const handleUpload = async () => {
-        if (!file) {
-            setUploadStatus("Please select a file first!");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("resume", file);
-
-        try {
-            setLoading(true);
-            setUploadStatus("");
-
-            const response = await axios.post("http://localhost:5000/upload", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            setUploadStatus("Upload successful!");
-            console.log("File uploaded:", response.data);
-        } catch (error) {
-            setUploadStatus("Upload failed!");
-            console.error("Upload error:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
+const ResumeUpload = ({
+    handleFileChange,
+    handleRemoveResume,
+    handleUpload,
+    fileInputRef,
+    file,
+    uploadStatus,
+    loading,
+}) => {
+    const maxSize = useMemo(()=>{
+        return 1 * 1024 * 1024;
+    }, []);
     return (
         <Box
             sx={{
@@ -54,28 +37,69 @@ const ResumeUpload = () => {
             }}
         >
             <Typography variant="h6" gutterBottom>
-                Upload Resume
+                Upload
             </Typography>
 
             <input
                 type="file"
                 accept=".pdf,.doc,.docx"
                 onChange={handleFileChange}
-                style={{ marginBottom: "10px" }}
+                ref={fileInputRef}
+                hidden
             />
 
+            {!file ? (
+                <Button
+                    variant="outlined"
+                    component="span"
+                    onClick={() => fileInputRef.current.click()}
+                    fullWidth
+                >
+                    Choose File
+                </Button>
+            ) : (
+                <Paper
+                    elevation={2}
+                    sx={{
+                        mt: 2,
+                        mb: 2,
+                        px: 2,
+                        py: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        flexDirection: "column"
+                    }}
+                >
+                    <Box display="flex" alignItems="center">
+                        <InsertDriveFileIcon sx={{ mr: 1 }} />
+                        <Typography variant="body2" noWrap>
+                            {file.name}
+                        </Typography>
+                        <IconButton onClick={handleRemoveResume} size="small">
+                            <CloseIcon fontSize="small" />
+                        </IconButton>
+                    </Box>
+                    <Box display="flex" alignItems="center">
+                        {file?.size > maxSize ? <Typography color="red">File size exceeds maximum limit (2MB)</Typography> : ""}
+                    </Box>
+                </Paper>
+            )}
             <Button
                 variant="contained"
                 startIcon={<UploadFileIcon />}
                 onClick={handleUpload}
-                disabled={loading}
-                sx={{ mt: 2, width: "100%" }}
+                disabled={loading || file?.size > maxSize}
+                sx={{ mt: 1, width: "100%" }}
             >
                 {loading ? <CircularProgress size={24} color="inherit" /> : "Upload"}
             </Button>
 
             {uploadStatus && (
-                <Typography variant="body2" sx={{ mt: 2, color: uploadStatus.includes("failed") ? "red" : "green" }}>
+                <Typography
+                    variant="body2"
+                    sx={{ mt: 2, color: uploadStatus.includes("failed") ? "red" : "green" }}
+                >
                     {uploadStatus}
                 </Typography>
             )}

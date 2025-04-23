@@ -82,3 +82,26 @@ export const getCurrentUser = async (token) => {
         throw error.response?.data || {error: "Network error"};
     }
 };
+
+export const uploadResume = async (file, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const config = {
+            method: 'POST',
+            url: 'resume/upload-resume',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            },
+            data: formData
+        };
+
+        const response = await axios(config);
+        return response.data;
+    } catch (error) {
+        console.log("Error while uploading resume: ", error);
+        throw error.response?.data || { error: "Network error" };
+    }
+};
